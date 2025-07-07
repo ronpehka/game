@@ -49,15 +49,13 @@ public class GameIntegrationTest {
 
     @Test
     public void testBetAndReceiveResult() throws Exception {
-        // Send a bet message
+
         session.sendMessage(new TextMessage("BET:{\"nickname\":\"PlayerTest\",\"number\":5,\"amount\":100}"));
 
-        // Expect a result in the next 15 seconds
         String message = messages.poll(15, TimeUnit.SECONDS);
 
         assertNotNull(message, "Expected WIN, LOSE or WINNERS message but got none");
 
-        // Validate the content
         assertTrue(message.startsWith("WIN") || message.startsWith("LOSE") || message.startsWith("WINNERS"),
                 "Unexpected message: " + message);
     }
